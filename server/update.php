@@ -90,12 +90,11 @@ if(isset($user) && isset($loc) && (strcmp($loc, "0.0 0.0") != 0)) {
 
       if (substr($helparr[$i],-4)!=".txt") continue;
 
-      $drunkloc = file("../phpdata/" . $user . "/" . "helpreq/" . $helparr[$i], FILE_IGNORE_NEW_LINES);
+      $userloc = file("../phpdata/" . $user . "/" . "helpreq/" . $helparr[$i], FILE_IGNORE_NEW_LINES);
       $info = file("../phpdata/" . substr($helparr[$i], 0, -4) . "/user.txt");
-      #echo "HR " . substr($helparr[$i], 0, -4) . " " . $drunkloc[0] . "|";
-      
+
       #Still need to add email, $user was replaced with the name in user.txt
-      echo "HR " . $info[0] . " " . $drunkloc[0] . "|";
+      echo "HR " . $info[0] . " " . $userloc[0] . "|";
 
    }
 
@@ -133,8 +132,7 @@ if(isset($user) && isset($loc) && (strcmp($loc, "0.0 0.0") != 0)) {
 
 
 
-   #DRUNK CODE
-   #For drunk user, updates their helper's file and sends back these updates with HB tag
+   #For user, updates their helper's file and sends back these updates with HB tag
    if (file_exists("../phpdata/" . $user . "/helper.txt")) {
 
      $helper = file("../phpdata/" . $user . "/helper.txt", FILE_IGNORE_NEW_LINES);

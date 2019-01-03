@@ -1,6 +1,6 @@
 <?php
 /*
-This file is called when a sober person accepts a help request. It takes care
+This file is called when a student helper accepts a help request. It takes care
 of removing all forms of the help request and puts the two users in tandem with
 a helper and helpee file.
 */

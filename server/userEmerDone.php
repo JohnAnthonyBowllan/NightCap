@@ -1,8 +1,8 @@
 <?php
 /*
-This file is called when a drunk person decides that the session is over.
+This file is called when a user decides that the session is over.
 It removes all the necessary files and resets the message number. Creates a
-done file for the other user to end their session as well.
+done file for the helper to end their session as well.
 */
 $user = $_GET['user'];
 $rqno = $_GET['rqno'];

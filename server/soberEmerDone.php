@@ -1,6 +1,6 @@
 <?php
 /*
-This file is called when a sober helper decides that their requestee is in a
+This file is called when a sober helper decides that their request is in a
 good position and ends the help session. It removes all the necessary files and
 resets the message number. Creates a done file for the other user to end their
 session as well.

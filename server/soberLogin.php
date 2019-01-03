@@ -1,6 +1,6 @@
 <?php
 /*
-This file is called when a user chooses "I can help" in the amin menu. This
+This file is called when a user chooses "I can help" in the main menu. This
 labels them as sober and also adds all the current, relevant help requests to
 their folder.
 */

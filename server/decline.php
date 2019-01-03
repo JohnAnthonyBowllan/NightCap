@@ -1,6 +1,6 @@
 <?php
 /*
-This fileis called when a sober person declines a user's request.
+This file is called when a sober person declines a user's request.
 */
 
 $user = $_GET['user'];
