@@ -3,31 +3,33 @@
 //  STEM1.0
 //
 //  Copyright © 2017 John Anthony Bowllan. All rights reserved.
-//
+
+// This file allows for a user to indicate his/her/their own helper
+// gender preferences 
 
 import UIKit
 
 class PreferenceViewController: UIViewController, BEMCheckBoxDelegate {
     @IBOutlet weak var male: BEMCheckBox!
-    
+
     @IBOutlet weak var female: BEMCheckBox!
-    
+
     @IBOutlet weak var other: BEMCheckBox!
-    
+
     @IBAction func toHome(_ sender: Any) {
         performSegue(withIdentifier: "toHome", sender: self)
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         male.delegate = self
         female.delegate = self
         other.delegate = self
-        
+
         // Do any additional setup after loading the view.
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         if Core.shared.malePreference == true {
             male.setOn(true, animated: false)
@@ -39,9 +41,9 @@ class PreferenceViewController: UIViewController, BEMCheckBoxDelegate {
             other.setOn(true, animated: false)
         }
     }
-    
+
     func didTap(_ checkBox: BEMCheckBox) {
-        
+
         if checkBox.tag == 1{
             Core.shared.malePreference = !Core.shared.malePreference
             UserDefaults.standard.set(Core.shared.malePreference, forKey: "malePreference")
@@ -59,6 +61,6 @@ class PreferenceViewController: UIViewController, BEMCheckBoxDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
 
 }

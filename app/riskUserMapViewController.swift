@@ -3,7 +3,9 @@
 //  STEM1.0
 //
 //  Copyright © 2017 John Anthony Bowllan. All rights reserved.
-//
+
+// This file allows a user to message their helper and see the helper's
+// location on a map
 
 import UIKit
 import MapKit

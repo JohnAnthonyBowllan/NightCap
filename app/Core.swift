@@ -1,9 +1,11 @@
 //
 //  Core.swift
-//  STEM1.0
-//
 //  Copyright © 2017 John Anthony Bowllan. All rights reserved.
 //
+
+// This is the main file of the project. It is responsible for transferring
+// data between ViewControllers, communicating with server, among other
+// functionality.
 
 import Foundation
 import CoreLocation
@@ -11,9 +13,12 @@ import SystemConfiguration.CaptiveNetwork
 
 final class Core{
 
+    // different states along the proces of linking helpers and helpees.
     enum helpStates {
         case OK,needHelp,helpRequested,helpAcknowledged,helperFound
     }
+
+    // ViewController states specific to the project
     enum viewStates {
         case None,riskUserList,riskUserMessaging,SoberMessaging,logIn,Preferences,Home,Loading,Initial,SSID,ErrorView
     }
@@ -94,11 +99,6 @@ final class Core{
         lastError = ""
     }
 
-
-    // Separate Home view controller into 2 home screens!
-    // Read in tag
-
-
     static let shared = Core()
 
     func gotLocation(latitude:Double,longitude:Double,altitude:Double){
@@ -120,6 +120,8 @@ final class Core{
     }
 
     @objc func serverUpdateLocation(){
+    // location update on user sent to server
+
         CoordinatePair = getCoordinatePair(latitude: userLatitude, longitude: userLongitude, altitude: userAltitude)
 
         let dictBSSID:[String:String] = getWIFIInformation()
@@ -134,6 +136,7 @@ final class Core{
     }
 
     func getWIFIInformation() -> [String:String]{
+    // returns BSSID or SSID for improved user location tracking
         var informationDictionary = [String:String]()
         let informationArray:NSArray? = CNCopySupportedInterfaces()
         if let information = informationArray {
@@ -176,20 +179,8 @@ final class Core{
         }
     }
 
-    // disable button after pressed
-    // enable on viewDidAppear
-
-
-    // try to connect BOOL (TRUE)
-    // before popup set to false
-    // send server connect -> if false, return
-    // have multiple options on pop up view, try again, or done (kick out)
-    // dont send requests while windows up
-    // set true right after popup
 
     func sendServerRequest(url:URL,requestNum:Int? = -1) {
-        // URLSession background sessions for downloads while app is not in use?
-        // URLSession.default... to obtain data incrementally
 
         var newURL = url
         var thisReqNo:Int //= requestNum
@@ -209,7 +200,6 @@ final class Core{
                     self.serverError(error: error!)
                 }
             } else {
-                // where webpage content is stored, sent to server receive to deal with it
                 let htmlContent = NSString(data: data!,encoding: String.Encoding.utf8.rawValue)!
                 DispatchQueue.main.async
                     {
@@ -225,6 +215,9 @@ final class Core{
     }
 
     func serverReceive(receivedInfo:String){
+    // performs auto segues once server acknowledged receiving appropriate data
+    // coordinates helper and helpee communication using tokens received from server
+
         helpList.removeAll()
         if receivedInfo.hasPrefix("<"){
             lastError = receivedInfo
@@ -297,7 +290,7 @@ final class Core{
                     }
                 }
                 if self.viewState == viewStates.SoberMessaging{
-                    if tokens[1] == "Fin"{ // HEREEEE
+                    if tokens[1] == "Fin"{ /
                         (self.viewController as! SoberMapViewController).messageViewSob.text.append("HELPEE ENDED SESSION")
                         emerDoneHelper = false
                         let finishHelpedURL = URL(string: IP+"/helpFinish.php?user="+Core.shared.sUsername)
@@ -359,7 +352,6 @@ final class Core{
                 }
 
 
-                // DISABLE BUTTON
                 break
             case "CA":
                 dictOfReq.removeValue(forKey: Int(tokens[1])!)
@@ -429,18 +421,6 @@ final class Core{
                     dictTimer.invalidate()
                 }
             }
-
-                    // remove from dictionary BUT CHECK RESET FIRST
-                    // IT KEEPS RESENDING POPUP
-                    // LOADING ANIMATION WHILE WAITING FOR SERVER
-                    // print("NOW REMOVING")
-                    //MAYBE DONT CLEAR AND DO SOMETHING ELSE!!!!
-                    //dictOfReq[key]
-                    //dictOfReq.removeValue(forKey: key)
-
-                    //INCORPORATE RSSI for accurate loc
-
-
         }
     }
 }

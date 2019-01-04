@@ -3,7 +3,8 @@
 //  STEM1.0
 //
 //  Copyright © 2017 John Anthony Bowllan. All rights reserved.
-//
+
+// Loading Screen (for user waiting for helper to be assigned to them)
 
 import UIKit
 import Foundation
@@ -12,20 +13,20 @@ class LoadingViewController: UIViewController  {
     //var timerFunc:Timer = Timer()
     @IBOutlet var addItemView: UIView!
     var cancelHelpButton = true
-    
+
     @IBAction func dismissPopUp(_ sender: Any) {
         animateOut()
         cancelHelpButton = true
         performSegue(withIdentifier: "kickBackLoadingToLogin", sender: self)
         Core.shared.coreDeleteDict()
     }
-    
-    
+
+
     @IBAction func retryRequestLoading(_ sender: Any) {
         Core.shared.coreResendRequest()
         animateOut()
     }
-    
+
     func animateIn(){
         self.view.addSubview(addItemView)
         addItemView.center = self.view.center
@@ -35,17 +36,17 @@ class LoadingViewController: UIViewController  {
             self.addItemView.transform = CGAffineTransform.identity
         }
     }
-    
+
     func animateOut(){
         UIView.animate(withDuration: 0.3, animations: {
             self.addItemView.transform = CGAffineTransform.init(scaleX:1.3,y:1.3)
             self.addItemView.alpha = 0
-            
+
         }) { (success:Bool) in
             self.addItemView.removeFromSuperview()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         cancelHelpButton = true
@@ -57,7 +58,7 @@ class LoadingViewController: UIViewController  {
     @IBAction func cancelHelpButton(_ sender: Any) {
         cancelHelpPressed()
     }
-    
+
     func cancelHelpPressed(){
         if cancelHelpButton == true{
             let cancelHelpURL = URL(string: Core.shared.IP+"/cancelHelp.php?user="+Core.shared.sUsername)
@@ -65,27 +66,27 @@ class LoadingViewController: UIViewController  {
         }
         cancelHelpButton = false
     }
-    
-    
+
+
     func loadingToMapSegue(){
-        
+
             Core.shared.messageFrom = Core.shared.sUsername
             Core.shared.messageTo = Core.shared.helpName
             performSegue(withIdentifier: "loadingSegue", sender: self)
             Core.shared.loadingToMapDrunk = false
             //timerFunc.invalidate()
-        
+
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         Core.shared.setViewState(newState: Core.viewStates.Loading, newController: self)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         Core.shared.setViewState(newState: Core.viewStates.None)
     }

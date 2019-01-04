@@ -3,12 +3,16 @@
 //  STEM1.0
 //
 //  Copyright © 2017 John Anthony Bowllan. All rights reserved.
-//
+
+// This file manages the ViewController that displays students in need of
+// assistance to helper
+
 
 import UIKit
 
-//List of people that need help
 var helpList = [String]()
+//List of people that need help
+
 var doneHelping:Bool = true
 
 class DisplayList: UIViewController,UITableViewDelegate,UITableViewDataSource{

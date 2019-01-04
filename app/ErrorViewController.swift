@@ -1,16 +1,16 @@
 //
 //  ErrorViewController.swift
-//  STEM1.0
 //
 //  Created by John Bowllan on 7/28/17.
-//
+
+// This file is associated to the ErrorViewController 
 
 import UIKit
 
 class ErrorViewController: UIViewController {
 
     @IBOutlet weak var errorLog: UITextView!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Core.shared.setViewState(newState: Core.viewStates.ErrorView, newController: self)
@@ -34,20 +34,8 @@ class ErrorViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     @IBAction func dismissError(_ sender: Any) {
         dismiss(animated:true,completion: nil)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

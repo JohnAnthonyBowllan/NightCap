@@ -1,30 +1,30 @@
 //
 //  ViewController.swift
-//  STEM1.0
 //
 //  Copyright © 2017 John Anthony Bowllan. All rights reserved.
-//
+
+// First time login screen to register and set preferences.
 
 import UIKit
 import Foundation
 
 
 class ViewController: UIViewController, BEMCheckBoxDelegate {
-    
+
     @IBOutlet var addItemView: UIView!
-    
+
     @IBOutlet weak var password: UITextField!
-    
+
     @IBOutlet weak var iAmMale: BEMCheckBox!
-    
+
     @IBOutlet weak var iAmFemale: BEMCheckBox!
-    
+
     @IBOutlet weak var iAmOther: BEMCheckBox!
-    
-    
+
+
     var goButton:Bool = true
-    
-    
+
+
     func didTap(_ checkBox: BEMCheckBox) {
         if checkBox == iAmMale{
             if iAmFemale.on{
@@ -50,7 +50,7 @@ class ViewController: UIViewController, BEMCheckBoxDelegate {
         }
         checkGender()
     }
-    
+
     func checkGender(){
         if iAmMale.on {
             Core.shared.userGender = "Male"
@@ -60,7 +60,7 @@ class ViewController: UIViewController, BEMCheckBoxDelegate {
             Core.shared.userGender = "Other"
         }
     }
-    
+
     @IBAction func setPreference(_ sender: Any) {
         if goButton == true{
             if password.text != nil && (iAmMale.on || iAmFemale.on||iAmOther.on){
@@ -73,18 +73,18 @@ class ViewController: UIViewController, BEMCheckBoxDelegate {
         }
         goButton = false
     }
-    
+
     @IBAction func dismissPopUp(_ sender: Any) {
         animateOut()
         goButton = true
         Core.shared.coreDeleteDict()
     }
-    
+
     @IBAction func retryRequestView(_ sender: Any) {
         Core.shared.coreResendRequest()
         animateOut()
     }
-    
+
     func animateIn(){
         self.view.addSubview(addItemView)
         addItemView.center = self.view.center
@@ -94,23 +94,23 @@ class ViewController: UIViewController, BEMCheckBoxDelegate {
             self.addItemView.transform = CGAffineTransform.identity
         }
     }
-    
+
     func animateOut(){
         UIView.animate(withDuration: 0.3, animations: {
             self.addItemView.transform = CGAffineTransform.init(scaleX:1.3,y:1.3)
             self.addItemView.alpha = 0
-            
+
         }) { (success:Bool) in
             self.addItemView.removeFromSuperview()
         }
     }
-    
+
     func serverfirsttimeLogin(){
         /*
          creates a user folder on server side for anyone who has app
          on the login page
          */
-        
+
         if let logininfo = UserDefaults.standard.object(forKey: "sUsername")as? String {
             Core.shared.sUsername = logininfo
         }
@@ -131,15 +131,14 @@ class ViewController: UIViewController, BEMCheckBoxDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         Core.shared.setViewState(newState: Core.viewStates.logIn,newController: self)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         Core.shared.setViewState(newState: Core.viewStates.None)
     }
 
 
 }
-
