@@ -1,5 +1,5 @@
 //
-//  DrunkMapViewController.swift
+//  riskUserMapViewController.swift
 //  STEM1.0
 //
 //  Copyright © 2017 John Anthony Bowllan. All rights reserved.
@@ -10,28 +10,28 @@ import MapKit
 import Foundation
 
 
-class DrunkMapViewController: UIViewController {
-    
-    //var timerMapDrunk:Timer = Timer()
+class riskUserMapViewController: UIViewController {
+
+    //var riskUserMapTimer:Timer = Timer()
     @IBOutlet weak var messagingDisplay: UITextView!
     @IBOutlet weak var enterText: UITextField!
-    
+
     @IBOutlet var addItemView: UIView!
-    
-    
+
+
     @IBAction func dismissPopUp(_ sender: Any) {
         animateOut()
-        Core.shared.emerDoneDrunkBool = true
-        performSegue(withIdentifier: "kickBackDrunkToLogin", sender: self)
+        Core.shared.emerDoneUser = true
+        performSegue(withIdentifier: "kickBackriskUserToLogin", sender: self)
         Core.shared.coreDeleteDict()
     }
-    
-    @IBAction func retryRequestDrunk(_ sender: Any) {
+
+    @IBAction func retryRequestriskUser(_ sender: Any) {
         Core.shared.coreResendRequest()
         animateOut()
     }
-    
-    
+
+
     func animateIn(){
         self.view.addSubview(addItemView)
         addItemView.center = self.view.center
@@ -41,25 +41,25 @@ class DrunkMapViewController: UIViewController {
             self.addItemView.transform = CGAffineTransform.identity
         }
     }
-    
+
     func animateOut(){
         UIView.animate(withDuration: 0.3, animations: {
             self.addItemView.transform = CGAffineTransform.init(scaleX:1.3,y:1.3)
             self.addItemView.alpha = 0
-            
+
         }) { (success:Bool) in
             self.addItemView.removeFromSuperview()
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         enterText.autocorrectionType = .no
-        Core.shared.emerDoneDrunkBool = true
+        Core.shared.emerDoneUser = true
         //messagingDisplay.text = "hi\n"
         /*
-        timerMapDrunk = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(drunkMap), userInfo: nil, repeats: true)
-        timerMapDrunk.fire()
+        riskUserMapTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(riskUserMap), userInfo: nil, repeats: true)
+        riskUserMapTimer.fire()
         // Do any additional setup after loading the view.*/
     }
 
@@ -78,28 +78,28 @@ class DrunkMapViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
 
-    @IBAction func EmerDoneDrunkButton(_ sender: Any) {
-        if Core.shared.emerDoneDrunkBool == true{
-            emergencyConcludedDrunkPressed()
+
+    @IBAction func EmerDoneriskUserButton(_ sender: Any) {
+        if Core.shared.emerDoneriskUserBool == true{
+            emergencyConcludedriskUserPressed()
         }
-        Core.shared.emerDoneDrunkBool = false
+        Core.shared.emerDoneUser = false
     }
-    
-    func emergencyConcludedDrunkPressed(){
-        print("emergency drunk done")
+
+    func emergencyConcludedriskUserPressed(){
+        print("emergency riskUser done")
         //Core.shared.stopTimer(timer: Core.shared.userTimer)
-        let emergencyDoneDrunkURL = URL(string: Core.shared.IP+"/drunkEmerDone.php?user="+Core.shared.sUsername)
-        Core.shared.sendServerRequest(url: emergencyDoneDrunkURL!)
-        Core.shared.loadingToMapDrunk = false
-        //timerMapDrunk.invalidate()
+        let emergencyDoneriskUserURL = URL(string: Core.shared.IP+"/userEmerDone.php?user="+Core.shared.sUsername)
+        Core.shared.sendServerRequest(url: emergencyDoneriskUserURL!)
+        Core.shared.loadingToMapriskUser = false
+        //riskUserMapTimer.invalidate()
     }
-    
-    func autoSegueHomeDrunk(){
-        performSegue(withIdentifier: "drunkSegueHome", sender: self)
+
+    func autoSegueHomeriskUser(){
+        performSegue(withIdentifier: "riskUserSegueHome", sender: self)
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         Core.shared.setViewState(newState: Core.viewStates.None)
         Core.shared.cannotSendMessage = false
@@ -109,27 +109,27 @@ class DrunkMapViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         messagingDisplay.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
-        Core.shared.setViewState(newState: Core.viewStates.DrunkMessaging,newController: self)
-        
+        Core.shared.setViewState(newState: Core.viewStates.riskUserMessaging,newController: self)
+
         self.messagingDisplay.scrollRangeToVisible(NSMakeRange(0, 0))
     }
     /*
-    func drunkMap(){
-        
+    func riskUserMap(){
+
         let soberCoord:CLLocationCoordinate2D = CLLocationCoordinate2DMake(Core.shared.helpLat,Core.shared.helpLong)
         let span:MKCoordinateSpan = MKCoordinateSpanMake(0.05,0.05)
         let myLocation:CLLocationCoordinate2D = CLLocationCoordinate2DMake(Core.shared.userLatitude, Core.shared.userLongitude)
-        
+
         let region:MKCoordinateRegion = MKCoordinateRegionMake(myLocation,span)
-        DrunkMap.setRegion(region, animated: true)
-        DrunkMap.tintColor = UIColor.cyan
-        self.DrunkMap.showsUserLocation = true
+        riskUserMap.setRegion(region, animated: true)
+        riskUserMap.tintColor = UIColor.cyan
+        self.riskUserMap.showsUserLocation = true
         let soberAnnotation = MKPointAnnotation()
         soberAnnotation.coordinate = soberCoord
         soberAnnotation.title = Core.shared.helpName
-        DrunkMap.addAnnotation(soberAnnotation)
-        
+        riskUserMap.addAnnotation(soberAnnotation)
+
     }*/
 }
